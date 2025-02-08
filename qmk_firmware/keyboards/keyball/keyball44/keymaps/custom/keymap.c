@@ -59,6 +59,37 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     return state;
 }
 
+enum combos {
+    COMBO_LEFT_CLICK,
+    COMBO_RIGHT_CLICK,
+    COMBO_BACK,
+    COMBO_FORWARD,
+};
+
+// キーの組み合わせを定義
+const uint16_t PROGMEM combo_left_click[] = {KC_J, KC_K, COMBO_END}; // J + K → 左クリック
+const uint16_t PROGMEM combo_right_click[] = {KC_K, KC_L, COMBO_END}; // K + L → 右クリック
+const uint16_t PROGMEM combo_back[] = {KC_H, KC_J, COMBO_END}; // H + J → 戻る
+const uint16_t PROGMEM combo_forward[] = {KC_L, KC_SCLN, COMBO_END}; // L + ; → 進む
+
+// コンボアクションを設定
+combo_t key_combos[] = {
+    [COMBO_LEFT_CLICK] = COMBO(combo_left_click, KC_MS_BTN1),  // 左クリック
+    [COMBO_RIGHT_CLICK] = COMBO(combo_right_click, KC_MS_BTN2), // 右クリック
+    [COMBO_BACK] = COMBO(combo_back, KC_MS_BTN4),  // 戻るボタン
+    [COMBO_FORWARD] = COMBO(combo_forward, KC_MS_BTN5) // 進むボタン
+};
+
+// タップ・アンド・ホールドの時間をカスタマイズ
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case KC_ESC:
+            return 50;  // ESCのTAPPING_TERMを150msに設定
+        default:
+            return TAPPING_TERM;  // 他のキーはデフォルト設定
+    }
+}
+
 #ifdef OLED_ENABLE
 
 #    include "lib/oledkit/oledkit.h"
