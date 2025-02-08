@@ -67,10 +67,10 @@ enum combos {
 };
 
 // キーの組み合わせを定義
-const uint16_t PROGMEM combo_left_click[] = {KC_J, KC_K, COMBO_END}; // J + K → 左クリック
+const uint16_t PROGMEM combo_left_click[] = {KC_L, KC_SCLN, COMBO_END}; // L + ; → 左クリック
 const uint16_t PROGMEM combo_right_click[] = {KC_K, KC_L, COMBO_END}; // K + L → 右クリック
+const uint16_t PROGMEM combo_forward[] = {KC_J, KC_K, COMBO_END}; // J + K → 左クリック
 const uint16_t PROGMEM combo_back[] = {KC_H, KC_J, COMBO_END}; // H + J → 戻る
-const uint16_t PROGMEM combo_forward[] = {KC_L, KC_SCLN, COMBO_END}; // L + ; → 進む
 
 // コンボアクションを設定
 combo_t key_combos[] = {
@@ -84,7 +84,9 @@ combo_t key_combos[] = {
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case KC_ESC:
-            return 50;  // ESCのTAPPING_TERMを150msに設定
+            return 10;  // ESCのTAPPING_TERMを150msに設定
+      case KC_SPC:
+            return 10;
         default:
             return TAPPING_TERM;  // 他のキーはデフォルト設定
     }
